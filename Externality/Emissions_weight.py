@@ -15,10 +15,12 @@ def emissions_weight(df, df_weight):
     df_weight = df_weight.rename(columns={'ORIG_CFS_AREA': 'origin_code'})
     df_weight = df_weight.rename(columns={'DEST_CFS_AREA': 'destination_code'})
 
-    def weighted_mean(x):
-        return np.average(x['WGT_FACTOR'], weights=x['SHIPMT_WGHT'])
-
-    weight_factor = df_weight.groupby(['origin_code', 'destination_code']).apply(weighted_mean).reset_index(name='w_factor')
+    weight_factor = (
+        df_weight.assign(w_factor=df_weight["WGT_FACTOR"] * df_weight["SHIPMT_WGHT"] / 2000)
+        .groupby(["origin_code", "destination_code"])["w_factor"]
+        .sum()
+        .reset_index()
+    )
 
     df = df.merge(weight_factor[['origin_code', 'destination_code', 'w_factor']],
                                         on=['origin_code', 'destination_code'], how='left')

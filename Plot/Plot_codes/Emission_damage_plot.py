@@ -9,8 +9,6 @@ os.chdir(workspace_folder)
 
 ### Location data
 df_results_60 = pd.read_csv('results/power_emission_60_per_route.csv')
-df_results_55 = pd.read_csv('results/power_emission_55_per_route.csv')
-df_results_50 = pd.read_csv('results/power_emission_50_per_route.csv')
 df_results_45 = pd.read_csv('results/power_emission_45_per_route.csv')
 df_results_diesel = pd.read_csv('results/diesel_damage_per_route.csv')
 print(df_results_diesel.columns)
@@ -90,5 +88,4 @@ for i, cost in enumerate(cost_vars):
     axes[i].spines["right"].set_visible(False)
 
 fig.tight_layout()
-plt.savefig("results/SVG/emissions_split_2025.svg", format='svg', transparent=True)
 plt.show()

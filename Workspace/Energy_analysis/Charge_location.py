@@ -10,8 +10,6 @@ from Filepath.filepath import workspace_folder
 os.chdir(workspace_folder)
 
 rt_leg_charge_45 = pd.read_csv('results/rt_leg_charge_45.csv')
-rt_leg_charge_50 = pd.read_csv('results/rt_leg_charge_50.csv')
-rt_leg_charge_55 = pd.read_csv('results/rt_leg_charge_55.csv')
 rt_leg_charge_60 = pd.read_csv('results/rt_leg_charge_60.csv')
 
 #print(rt_leg_charge_55.dtypes)
@@ -20,24 +18,16 @@ rt_leg_charge_60 = get_charge_distance(rt_leg_charge_60)
 rt_leg_charge_60.to_csv('results/rt_leg_charge_60_distance.csv', index=False)
 rt_leg_charge_45 = get_charge_distance(rt_leg_charge_45)
 rt_leg_charge_45.to_csv('results/rt_leg_charge_45_distance.csv', index=False)
-rt_leg_charge_55 = get_charge_distance(rt_leg_charge_55)
-rt_leg_charge_55.to_csv('results/rt_leg_charge_55_distance.csv', index=False)
-rt_leg_charge_50 = get_charge_distance(rt_leg_charge_50)
-rt_leg_charge_50.to_csv('results/rt_leg_charge_50_distance.csv', index=False)
 
 # Ensure charge_mile_5 exists in rt_leg_charge_45
 if 'charge_mile_5' not in rt_leg_charge_45.columns:
     rt_leg_charge_45['charge_mile_5'] = np.nan
-if 'charge_mile_5' not in rt_leg_charge_50.columns:
-    rt_leg_charge_50['charge_mile_5'] = np.nan
 
 # merge all speeds dfs to get only unique charge locations
 cols_to_keep = ['lat', 'lon', 'lat2', 'lon2','charge_mile_1', 'charge_mile_2', 'charge_mile_3', 'charge_mile_4', 'charge_mile_5']
 df_60 = rt_leg_charge_60[cols_to_keep]
 df_45 = rt_leg_charge_45[cols_to_keep]
-df_50 = rt_leg_charge_50[cols_to_keep]
-df_55 = rt_leg_charge_55[cols_to_keep]
-rt_leg_charge_combined = pd.concat([df_60, df_55, df_50, df_45], ignore_index=True)
+rt_leg_charge_combined = pd.concat([df_60, df_45], ignore_index=True)
 
 # get unique charge points and get coordinates
 print(datetime.now())
@@ -58,16 +48,10 @@ print(datetime.now())
 
 #unique_charge_coordinates = pd.read_csv('results/unique_charge_points_coordinates.csv')
 #rt_leg_charge_45 = pd.read_csv('results/rt_leg_charge_45_distance.csv')
-#rt_leg_charge_50 = pd.read_csv('results/rt_leg_charge_50_distance.csv')
-#rt_leg_charge_55 = pd.read_csv('results/rt_leg_charge_55_distance.csv')
 #rt_leg_charge_60 = pd.read_csv('results/rt_leg_charge_60_distance.csv')
 
 # Apply to routes
 rt_leg_charge_45 = merge_charge_coordinates(rt_leg_charge_45, unique_charge_coordinates)
 rt_leg_charge_45.to_csv('results/rt_leg_charge_45_location.csv', index=False)
-rt_leg_charge_50 = merge_charge_coordinates(rt_leg_charge_50, unique_charge_coordinates)
-rt_leg_charge_50.to_csv('results/rt_leg_charge_50_location.csv', index=False)
 rt_leg_charge_60 = merge_charge_coordinates(rt_leg_charge_60, unique_charge_coordinates)
 rt_leg_charge_60.to_csv('results/rt_leg_charge_60_location.csv', index=False)
-rt_leg_charge_55 = merge_charge_coordinates(rt_leg_charge_55, unique_charge_coordinates)
-rt_leg_charge_55.to_csv('results/rt_leg_charge_55_location.csv', index=False)

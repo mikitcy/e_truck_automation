@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from scipy.integrate import trapz
 
 def get_motor_eff(load_factors):
     # NREL FastSim Nissan Leaf 30kWh (80kW max)

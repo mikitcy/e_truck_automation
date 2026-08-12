@@ -97,3 +97,22 @@ def add_break_time(df):
 
     return df
 
+def add_urban_time(rt_route_charge, rt):
+    rt_urban_1 = rt[rt["urban"].isin([1, 2])]
+    urban_time_per_route = (
+        rt_urban_1
+        .groupby(["origin_code", "destination_code"], as_index=False)["minutes"]
+        .sum()
+        .rename(columns={"minutes": "urban_minutes"})
+    )
+
+    rt_route_charge = rt_route_charge.merge(
+        urban_time_per_route,
+        on=["origin_code", "destination_code"],
+        how="left"
+    )
+    rt_route_charge["urban_minutes"] = rt_route_charge["urban_minutes"].fillna(0)
+
+    rt_route_charge['time_total'] = rt_route_charge['time_total'] + rt_route_charge["urban_minutes"]
+
+    return rt_route_charge

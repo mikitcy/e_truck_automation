@@ -25,8 +25,9 @@ The following data is downloaded from external data portal and used in this mode
 - Commodity Flow Survey
   - 2017 Commodity Flow Survey Datasets; Public Use File (PUF)
     https://www.census.gov/data/datasets/2017/econ/cfs/historical-datasets.html
-  - The 2022 Commodity Flow Survey Public Use File (PUF) is scheduled to be released in August 2025.
+  - The 2022 Commodity Flow Survey Public Use File (PUF) (released in August 2025)
     https://www.census.gov/data/datasets/2022/econ/cfs/historical-datasets.html
 
-*** Google Direction API (currently only in R code); "rt_final.csv" was created through the R code. 
+*** Google Direction API (currently only in R code); "rt_final.csv" was created through the R code
+
 *** For a sample input dataset, see the "rt_final_sample.csv"

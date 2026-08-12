@@ -5,7 +5,7 @@ from datetime import datetime
 
 from Drive_profile.Drive_profile import process_drive_cycle
 from Energy_analysis.Electric_withcharge import get_charge_scenarios
-from Energy_analysis.Time import calculate_duration_with_charge
+from Energy_analysis.Time import calculate_duration_with_charge, add_urban_time
 from Filepath.filepath import workspace_folder
 
 os.chdir(workspace_folder)
@@ -32,10 +32,6 @@ print(rt_all)
 file_path = "heavytruck_cruise_drivecycle.csv"
 (hw_ramping_up_60, hw_cruise_60, hw_ramping_down_60, hw_ramping_60,
  ordist_cruise_60, ordist_ramping_60, ordist_ramping_up_60, ordist_ramping_down_60) = process_drive_cycle(file_path, 60)
-(hw_ramping_up_55, hw_cruise_55, hw_ramping_down_55, hw_ramping_55,
- ordist_cruise_55, ordist_ramping_55, ordist_ramping_up_55, ordist_ramping_down_55) = process_drive_cycle(file_path, 55)
-(hw_ramping_up_50, hw_cruise_50, hw_ramping_down_50, hw_ramping_50,
- ordist_cruise_50, ordist_ramping_50, ordist_ramping_up_50, ordist_ramping_down_50) = process_drive_cycle(file_path, 50)
 (hw_ramping_up_45, hw_cruise_45, hw_ramping_down_45, hw_ramping_45,
  ordist_cruise_45, ordist_ramping_45, ordist_ramping_up_45, ordist_ramping_down_45) = process_drive_cycle(file_path, 45)
 
@@ -52,17 +48,6 @@ rt_leg_charge_45.to_csv('results/rt_leg_charge_45.csv', index=False)
 rt_all_60.to_csv('results/rt_all_60_charge.csv', index=False)
 rt_leg_charge_60.to_csv('results/rt_leg_charge_60.csv', index=False)
 
-(rt_all_55, rt_leg_charge_55) = get_charge_scenarios(rt_all, rt_highway, battery_kwh, hw_ramping_55, hw_ramping_up_55, hw_ramping_down_55,
-                                 hw_cruise_55, ordist_ramping_55, ordist_ramping_up_55, ordist_ramping_down_55, ordist_cruise_55)
-rt_all_55.to_csv('results/rt_all_55_charge.csv', index=False)
-rt_leg_charge_55.to_csv('results/rt_leg_charge_55.csv', index=False)
-
-(rt_all_50, rt_leg_charge_50) = get_charge_scenarios(rt_all, rt_highway, battery_kwh, hw_ramping_50, hw_ramping_up_50, hw_ramping_down_50,
-                                 hw_cruise_50, ordist_ramping_50, ordist_ramping_up_50, ordist_ramping_down_50, ordist_cruise_50)
-rt_all_50.to_csv('results/rt_all_50_charge.csv', index=False)
-rt_leg_charge_50.to_csv('results/rt_leg_charge_50.csv', index=False)
-print(datetime.now())
-
 
 ### Travel duration analysis
 charger_kw = 350
@@ -70,8 +55,10 @@ rt_all_45_time = calculate_duration_with_charge(rt_all_45, rt_highway, battery_k
 rt_all_45_time.to_csv('results/rt_all_45_time_charge.csv', index=False)
 rt_all_60_time = calculate_duration_with_charge(rt_all_60, rt_highway, battery_kwh, charger_kw, hw_ramping_60, hw_cruise_60, ordist_ramping_60, ordist_cruise_60)
 rt_all_60_time.to_csv('results/rt_all_60_time_charge.csv', index=False)
-rt_all_55_time = calculate_duration_with_charge(rt_all_55, rt_highway, battery_kwh, charger_kw, hw_ramping_55, hw_cruise_55, ordist_ramping_55, ordist_cruise_55)
-rt_all_55_time.to_csv('results/rt_all_55_time_charge.csv', index=False)
-rt_all_50_time = calculate_duration_with_charge(rt_all_50, rt_highway, battery_kwh, charger_kw, hw_ramping_50, hw_cruise_50, ordist_ramping_50, ordist_cruise_50)
-rt_all_50_time.to_csv('results/rt_all_50_time_charge.csv', index=False)
+print(datetime.now())
+
+rt_all_45_time = add_urban_time(rt_all_45_time, rt)
+rt_all_45_time.to_csv('results/rt_all_45_time_charge_withurban.csv', index=False)
+rt_all_60_time = add_urban_time(rt_all_60_time, rt)
+rt_all_60_time.to_csv('results/rt_all_60_time_charge_withurban.csv', index=False)
 print(datetime.now())

@@ -1,20 +1,13 @@
-import osmnx as ox
 import os
 import requests
-import networkx as nx
-from geopy.distance import geodesic
-import numpy as np
 import pandas as pd
-from datetime import datetime
-from collections import defaultdict
+from math import radians, sin, cos, sqrt, atan2
 
 def get_segment_length(lat1, lon1, lat2, lon2):
     """
     Calculate the great-circle distance between two points
     on the Earth's surface given their latitude and longitude.
     """
-    from math import radians, sin, cos, sqrt, atan2
-
     # Radius of the Earth in meters
     R = 6371000
 

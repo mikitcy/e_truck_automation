@@ -52,7 +52,6 @@ plt.plot(hw_profile_plot["time"], hw_profile_plot["velocity"], color="#FFC61E", 
 plt.plot(hw_profile_plot_50["time"], hw_profile_plot_50["velocity"], color="#009ADE", linewidth=1, label="50 mph")
 plt.plot(hw_profile_plot_45["time"], hw_profile_plot_45["velocity"], color="#00CD6C", linewidth=1, label="45 mph")
 
-# Labels and formatting
 plt.xlabel("Time (s)", fontsize=18, fontweight="bold")
 plt.ylabel("Velocity (mph)", fontsize=18, fontweight="bold")
 plt.xticks(fontsize=18)
@@ -61,9 +60,5 @@ plt.grid(True, linestyle="--", alpha=0.5)
 plt.gca().set_facecolor("white")
 plt.gca().spines["top"].set_visible(False)
 plt.gca().spines["right"].set_visible(False)
-
-# Remove legend
 plt.legend(loc='center left', bbox_to_anchor=(0.8, 0.8), fontsize=18).set_visible(True)
-plt.savefig("results/SVG/drive_profile.svg", format='svg', transparent=True)
-# Show the plot
 plt.show()

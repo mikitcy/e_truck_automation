@@ -11,8 +11,6 @@ os.chdir(workspace_folder)
 
 ### Location data
 rt_leg_charge_45 = pd.read_csv('results/rt_leg_charge_45_location.csv')
-rt_leg_charge_50 = pd.read_csv('results/rt_leg_charge_50_location.csv')
-rt_leg_charge_55 = pd.read_csv('results/rt_leg_charge_55_location.csv')
 rt_leg_charge_60 = pd.read_csv('results/rt_leg_charge_60_location.csv')
 print(rt_leg_charge_60.columns)
 
@@ -27,47 +25,29 @@ shapefile_path = "shape/cb_2018_us_county_500k.zip"
 df_60 = emissions_damage_waypoints(rt_leg_charge_60, shapefile_path, df_gea, md_df)
 df_60 = emissions_damage_entrance(df_60, shapefile_path, df_gea, md_df)
 
-df_55 = emissions_damage_waypoints(rt_leg_charge_55, shapefile_path, df_gea, md_df)
-df_55 = emissions_damage_entrance(df_55, shapefile_path, df_gea, md_df)
-
-df_50 = emissions_damage_waypoints(rt_leg_charge_50, shapefile_path, df_gea, md_df)
-df_50 = emissions_damage_entrance(df_50, shapefile_path, df_gea, md_df)
-
 df_45 = emissions_damage_waypoints(rt_leg_charge_45, shapefile_path, df_gea, md_df)
 df_45 = emissions_damage_entrance(df_45, shapefile_path, df_gea, md_df)
 
 ### Cost calculate per route
 df_60, df_results_60 = grid_emissions_damage_total(df_60, battery_kwh)
-df_55, df_results_55 = grid_emissions_damage_total(df_55, battery_kwh)
-df_50, df_results_50 = grid_emissions_damage_total(df_50, battery_kwh)
 df_45, df_results_45 = grid_emissions_damage_total(df_45, battery_kwh)
 
 df_60.to_csv("results/power_emission_60.csv", index=False)
-df_55.to_csv("results/power_emission_55.csv", index=False)
-df_50.to_csv("results/power_emission_50.csv", index=False)
 df_45.to_csv("results/power_emission_45.csv", index=False)
 
 ### Add vehicle cycle emissions
 df_results_60 = get_vehicle_emissions_electric(df_results_60, battery_kwh)
-df_results_55 = get_vehicle_emissions_electric(df_results_55, battery_kwh)
-df_results_50 = get_vehicle_emissions_electric(df_results_50, battery_kwh)
 df_results_45 = get_vehicle_emissions_electric(df_results_45, battery_kwh)
 
 ### Get total cost
 df_results_60 = get_total_externality(df_results_60)
-df_results_55 = get_total_externality(df_results_55)
-df_results_50 = get_total_externality(df_results_50)
 df_results_45 = get_total_externality(df_results_45)
 
 # Weight factor per shipped weight
 df_weight = pd.read_csv("weight_factor_rev.csv")
 df_results_60 = emissions_weight(df_results_60, df_weight)
-df_results_55 = emissions_weight(df_results_55, df_weight)
-df_results_50 = emissions_weight(df_results_50, df_weight)
 df_results_45 = emissions_weight(df_results_45, df_weight)
 
 df_results_60.to_csv('results/power_emission_60_per_route.csv')
-df_results_55.to_csv('results/power_emission_55_per_route.csv')
-df_results_50.to_csv('results/power_emission_50_per_route.csv')
 df_results_45.to_csv('results/power_emission_45_per_route.csv')
 
